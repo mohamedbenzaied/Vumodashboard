@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState , useEffect} from 'react';
+import TableauDashboard from './Dashboard';
 
-function App() {
+const App = () => {
+  const [token, setToken] = useState('');
+
+  // Function to extract token from URL
+  const getTokenFromURL = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('token');
+  };
+
+  // Set token when component mounts
+  useEffect(() => {
+    const token = getTokenFromURL();
+    setToken(token);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <TableauDashboard token={token} />
     </div>
   );
-}
+};
 
 export default App;
