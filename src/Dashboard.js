@@ -10,7 +10,7 @@ const TableauDashboard = ({ token }) => {
     <div>
       {/* Container for embedding the Tableau dashboard */}
       <tableau-viz id="tableauViz"
-        src='https://prod-uk-a.online.tableau.com/t/slawekpotasz701cda0c89/views/holman-shared/Enterpriseclean'
+        src={process.env.uri}
         token={token}
         toolbar="hidden" hide-tabs>
       </tableau-viz>
