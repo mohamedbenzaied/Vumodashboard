@@ -11,6 +11,8 @@ const TableauDashboard = ({ }) => {
             throw new Error('Failed to fetch token');
           }
           const data = await response.json();
+          console.error('data fetching token:', data);
+
           setToken(data.token);
         } catch (error) {
           console.error('Error fetching token:', error);
