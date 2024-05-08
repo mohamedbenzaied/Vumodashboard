@@ -1,10 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState} from 'react';
 
-const TableauDashboard = ({ token }) => {
-  useEffect(() => {
-    // Function to set token in tableau-viz element
+const TableauDashboard = ({ }) => {
+    const [token, setToken] = useState('');
 
-  }, [token]);
+    useEffect(() => {
+      const fetchToken = async () => {
+        try {
+          const response = await fetch('https://backauth.azurewebsites.net/gettoken');
+          if (!response.ok) {
+            throw new Error('Failed to fetch token');
+          }
+          const data = await response.json();
+          setToken(data.token);
+        } catch (error) {
+          console.error('Error fetching token:', error);
+        }
+      };
+  
+      fetchToken();
+    }, []);
 
   return (
     <div>
