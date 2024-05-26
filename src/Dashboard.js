@@ -30,6 +30,7 @@ const TableauDashboard = ({ }) => {
         token={token}
         toolbar="hidden" hide-tabs>
       </tableau-viz>
+      
     </div>
   );
 };
