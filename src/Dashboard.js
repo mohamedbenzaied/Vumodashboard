@@ -21,8 +21,26 @@ const TableauDashboard = ({ }) => {
   
       fetchToken();
     }, []);
-    let viz = document.getElementById('tableauViz');
-    viz.addFilter('Dealership Group ID', 'aaa111');
+    useEffect(() => {
+      if (token) {
+        const tableauVizElement = document.getElementById('tableauViz');
+  
+        const handleVizLoad = () => {
+          const viz = tableauVizElement.viz;
+  
+          if (viz) {
+            // Apply filter
+            viz.addFilter('Dealership Group ID', 'aaa111');
+          }
+        };
+  
+        tableauVizElement.addEventListener('firstinteractive', handleVizLoad);
+  
+        return () => {
+          tableauVizElement.removeEventListener('firstinteractive', handleVizLoad);
+        };
+      }
+    }, [token]);
   return (
     <div>
       {/* Container for embedding the Tableau dashboard */}
