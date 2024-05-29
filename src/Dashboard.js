@@ -28,7 +28,8 @@ const TableauDashboard = ({ }) => {
         src='https://prod-uk-a.online.tableau.com/t/slawekpotasz701cda0c89/views/vumobiv0_1/Overview'
         token={token}
         toolbar="hidden" hide-tabs>
-          <viz-filter field="Dealership Group ID" value="aaa111"> </viz-filter> 
+          <viz-filter field="VIN" value="ZFFLG40A8R0097259"> </viz-filter> 
+          
       </tableau-viz>
       
     </div>
