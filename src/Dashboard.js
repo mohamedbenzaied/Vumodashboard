@@ -23,8 +23,6 @@ const TableauDashboard = ({ }) => {
     }, []);
     let viz = document.getElementById('tableauViz');
     viz.addFilter('Dealership Group ID', 'aaa111');
-    document.getElementById('tableauViz').appendChild(viz);
-
   return (
     <div>
       {/* Container for embedding the Tableau dashboard */}
