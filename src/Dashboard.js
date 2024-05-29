@@ -25,31 +25,41 @@ const TableauDashboard = () => {
 
   useEffect(() => {
     if (token && vizRef.current) {
-      const { tableau } = window;
-      const vizUrl = 'https://prod-uk-a.online.tableau.com/t/slawekpotasz701cda0c89/views/vumobiv0_1/Overview';
-      const options = {
-        hideTabs: true,
-        toolbar: 'hidden',
-        height: '800px',
-        width: '100%',
-        token: token,
-        onFirstInteractive: () => {
-          const viz = vizRef.current.viz;
-          const workbook = viz.getWorkbook();
-          const activeSheet = workbook.getActiveSheet();
+      // Ensure tableau is available globally
+      const waitForTableau = () => {
+        if (window.tableau) {
+          const { tableau } = window;
+          const vizUrl = 'https://prod-uk-a.online.tableau.com/t/slawekpotasz701cda0c89/views/vumobiv0_1/Overview';
+          const options = {
+            hideTabs: true,
+            toolbar: 'hidden',
+            height: '800px',
+            width: '100%',
+            token: token,
+            onFirstInteractive: () => {
+              const viz = vizRef.current.viz;
+              const workbook = viz.getWorkbook();
+              const activeSheet = workbook.getActiveSheet();
 
-          // Apply filters
-          activeSheet.applyFilterAsync('VIN', 'ZFFLG40A8R0097259', tableau.FilterUpdateType.REPLACE)
-            .then(() => {
-              console.log('Filter applied successfully');
-            })
-            .catch(err => {
-              console.error('Error applying filter:', err);
-            });
+              // Apply filters
+              activeSheet.applyFilterAsync('VIN', 'ZFFLG40A8R0097259', tableau.FilterUpdateType.REPLACE)
+                .then(() => {
+                  console.log('Filter applied successfully');
+                })
+                .catch(err => {
+                  console.error('Error applying filter:', err);
+                });
+            }
+          };
+
+          vizRef.current.viz = new tableau.Viz(vizRef.current, vizUrl, options);
+        } else {
+          // Retry until tableau is available
+          setTimeout(waitForTableau, 100);
         }
       };
 
-      vizRef.current.viz = new tableau.Viz(vizRef.current, vizUrl, options);
+      waitForTableau();
     }
   }, [token]);
 
