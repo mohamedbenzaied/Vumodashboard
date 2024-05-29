@@ -21,26 +21,6 @@ const TableauDashboard = ({ }) => {
   
       fetchToken();
     }, []);
-    useEffect(() => {
-      if (token) {
-        const tableauVizElement = document.getElementById('tableauViz');
-  
-        const handleVizLoad = () => {
-          const viz = tableauVizElement.viz;
-  
-          if (viz) {
-            // Apply filter
-            viz.addFilter('Dealership Group ID', 'aaa111');
-          }
-        };
-  
-        tableauVizElement.addEventListener('firstinteractive', handleVizLoad);
-  
-        return () => {
-          tableauVizElement.removeEventListener('firstinteractive', handleVizLoad);
-        };
-      }
-    }, [token]);
   return (
     <div>
       {/* Container for embedding the Tableau dashboard */}
@@ -48,6 +28,7 @@ const TableauDashboard = ({ }) => {
         src='https://prod-uk-a.online.tableau.com/t/slawekpotasz701cda0c89/views/vumobiv0_1/Overview'
         token={token}
         toolbar="hidden" hide-tabs>
+          <viz-filter field="Dealership Group ID" value="aaa111"> </viz-filter> 
       </tableau-viz>
       
     </div>
