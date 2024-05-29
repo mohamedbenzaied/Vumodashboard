@@ -21,6 +21,9 @@ const TableauDashboard = ({ }) => {
   
       fetchToken();
     }, []);
+    let viz = document.getElementById('tableauViz');
+    viz.addFilter('Dealership Group ID', 'aaa111');
+    document.getElementById('tableauViz').appendChild(viz);
 
   return (
     <div>
